@@ -1,7 +1,6 @@
 var myApp = angular.module('myApp', []);
 
-myApp.Controller('mainController', ['$scope', function($scope){
-	
-	$console.log($scope);
-	
-}])
+myApp.controller('mainController', function($scope){
+$scope.wineTypes = ['Rosso', 'Bianco', 'Rosé'];
+
+});
