@@ -6,19 +6,30 @@ myApp.controller('mainController', function ($scope) {
 });
 
 myApp.controller('crudController', function ($scope, $http) {
-	$scope.customers = '';
+	$scope.name = '';
+	$scope.year = '';
+	$scope.wineType = '';
 
-	$scope.getResults = function(){
+	$scope.getResults = function () {
+		$http.get('/api/wines').then(
+			function (result) {
+				$scope.wines = result.data._embedded.wines;
+				console.log($scope.wines);
+				console.log(result)
+			}, function (data, status) {
+				console.log(data, status);
+			});
+	}
 
-	$http.get('/api/customers').then(
-		function(result){
-			$scope.customers = result.data._embedded.customers;
-			console.log($scope.customers);
-			console.log(result)
-		}, function(data, status){
-			console.log(data, status);
-		});
-
+	$scope.setResult = function () {
+		$http.post('/api/wines', { name: $scope.name, year: $scope.year, wineType: $scope.wineType }).then(
+			function (result) {
+				$scope.name = '';
+				$scope.year = '';
+				$scope.wineType = '';
+			}, function (data, status) {
+				console.log(data, status);
+			});
 	}
 
 });
