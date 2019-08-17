@@ -13,26 +13,26 @@
 
 <body>
 	<div ng-controller="crudController">
-		<h3>Create</h3>
-		name: <input type="text" ng-model="name"><br>
-		year: <input type="number" ng-model="year"><br>
-		wineType: <input type="text" ng-model="wineType"><br>
-		<button ng-click="setResult()">Click me</button>
-
-		<hr>
-		<h3>Read</h3>
-		<button ng-click="getResults()">click me</button>
-
-		<lu>
-			<li ng-repeat="wine in wines">{{ wine.name }}</li>
-		</lu>
-
+		<table>
+			<tr>
+				<th>name</th>
+				<th>year</th>
+				<th>winetype</th>
+			</tr>
+			
+			<tr ng-repeat="wine in wines">
+				<td>{{ wine.name }}</td>
+				<td>{{ wine.year }}</td>
+				<td>{{ wine.wineType }}</td>
+			</tr>
+			
+			<tr>
+				<td><input type="text" ng-model="name"></td>
+				<td><input type="number" ng-model="year"></td>
+				<td><input type="text" ng-model="wineType"></td>
+			</tr>				
+		</table>
+		<button ng-click="setWine()">click me</button>
 	</div>
-	<hr>
-	<h3>Update</h3>
-	wine name? <input type="text" ng-model="wineToSeach">
-	<button ng-click="searchByName">Search</button>
-
 </body>
-
 </html>
