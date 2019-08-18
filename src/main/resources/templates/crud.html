@@ -24,6 +24,7 @@
 				<td>{{ wine.name }}</td>
 				<td>{{ wine.year }}</td>
 				<td>{{ wine.wineType }}</td>
+				<td><button ng-click="deleteWine(wine._links.self.href, $index)">delete</button></td>
 			</tr>
 			
 			<tr>

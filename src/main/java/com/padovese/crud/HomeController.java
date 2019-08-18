@@ -10,7 +10,7 @@ public class HomeController {
 	public String home() {
 		return "home";
 	}
-	
+
 	@GetMapping("/crud")
 	public String crud() {
 		return "crud";

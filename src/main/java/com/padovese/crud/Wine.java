@@ -1,10 +1,12 @@
 package com.padovese.crud;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
 
 @Data
+@Document
 public class Wine {
 
     @Id
@@ -21,4 +23,10 @@ public class Wine {
         this.year = year;
         this.wineType = wineType;
     }
+
+	public String getName() {
+		return name;
+	}
+    
+    
 }
