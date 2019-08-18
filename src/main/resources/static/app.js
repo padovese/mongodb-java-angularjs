@@ -8,7 +8,7 @@ myApp.controller('mainController', function ($scope) {
 myApp.controller('crudController', function ($scope, $http, ) {
 	$scope.name = '';
 	$scope.year = '';
-	$scope.wineType = '';
+	$scope.wineType = 'RED';
 
 
 		$http.get('/api/wines').then(
@@ -25,7 +25,7 @@ myApp.controller('crudController', function ($scope, $http, ) {
 			function (result) {
 				$scope.name = '';
 				$scope.year = '';
-				$scope.wineType = '';
+				//$scope.wineType = '';
 				$scope.wines.push(result.data);
 			}, function (data, status) {
 				console.log(data, status);
