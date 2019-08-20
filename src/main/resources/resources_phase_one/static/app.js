@@ -1,19 +1,4 @@
-var myApp = angular.module('myApp', ['ngRoute']);
-
-myApp.config(function ($routeProvider) {
-
-	$routeProvider
-
-		.when("/", {
-			templateUrl: 'homeContent.html',
-			controller: 'mainController'
-		})
-
-		.when("/second", {
-			templateUrl: 'crudContent.html',
-			controller: 'crudController'
-		})
-});
+var myApp = angular.module('myApp', []);
 
 myApp.controller('mainController', function ($scope) {
 	$scope.wineTypes = ['Rosso', 'Bianco', 'Rosé'];
@@ -26,13 +11,13 @@ myApp.controller('crudController', function ($scope, $http, ) {
 	$scope.wineType = 'RED';
 
 
-	$http.get('/api/wines').then(
-		function (result) {
-			$scope.wines = result.data._embedded.wines;
-			console.log(result)
-		}, function (data, status) {
-			console.log(data, status);
-		});
+		$http.get('/api/wines').then(
+			function (result) {
+				$scope.wines = result.data._embedded.wines;
+				console.log(result)
+			}, function (data, status) {
+				console.log(data, status);
+			});
 
 
 	$scope.setWine = function () {
@@ -47,15 +32,15 @@ myApp.controller('crudController', function ($scope, $http, ) {
 			});
 	}
 
-	$scope.deleteWine = function (endPoint, i) {
+	$scope.deleteWine = function(endPoint, i){
 		$http.delete(endPoint).then(
-			function (result) {
+			function(result){
 				console.log(endPoint);
 				$scope.wines.splice(i, 1);
-			}, function (data, result) {
+			}, function(data, result){
 				console.log(endPoint);
 			});
-
+			
 	}
 
 });

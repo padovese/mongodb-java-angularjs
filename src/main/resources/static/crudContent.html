@@ -1,0 +1,32 @@
+<div ng-controller="crudController" class="col-sm">
+	<table class="table table-sm">
+		<tr>
+			<th>Name</th>
+			<th>Year</th>
+			<th>Wine Type</th>
+			<th></th>
+			<th></th>
+		</tr>
+
+		<tr ng-repeat="wine in wines">
+			<td>{{ wine.name }}</td>
+			<td>{{ wine.year }}</td>
+			<td>{{ wine.wineType }}</td>
+			<td><a href>edit</a></td>
+			<td><a href ng-click="deleteWine(wine._links.self.href, $index)">delete</a></td>
+		</tr>
+
+		<tr>
+			<td><input type="text" class="form-control" ng-model="name"></td>
+			<td><input type="number" class="form-control" ng-model="year"></td>
+			<td><select class="form-control" ng-model="wineType">
+					<option value="RED">RED</option>
+					<option value="WHITE">WHITE</option>
+					<option value="ROSSE">ROSSE</option>
+				</select></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</table>
+	<button class="form-control" ng-click="setWine()">create</button>
+</div>

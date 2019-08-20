@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <meta charset="utf-8">
+    <title>Page Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <script src="app.js"></script>
+</head>
+<body>
+    <div ng-controller="mainController">Hello
+    <div ng-if="1 === 2">ng-if</div>
+    <div ng-show="1 === 1">ng-show</div>
+    <div ng-hide="1 === 1">ng-hide</div>
+    <ul>
+    <li ng-repeat="wineType in wineTypes">{{ wineType }}</li>
+    </ul>
+    <input type="text" ng-model="modelExample">
+    {{ modelExample }}
+    </div>
+</body>
+</html>
