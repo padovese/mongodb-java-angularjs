@@ -3,24 +3,36 @@ var myApp = angular.module('myApp', ['ngRoute']);
 myApp.config(function ($routeProvider) {
 
 	$routeProvider
-
 		.when("/", {
-			templateUrl: 'homeContent.html',
-			controller: 'mainController'
+			templateUrl: 'crudContent.html',
+			controller: 'crudController'
 		})
 
-		.when("/second", {
-			templateUrl: 'crudContent.html',
+		.when("/update", {
+			templateUrl: 'updateContent.html',
 			controller: 'crudController'
 		})
 });
 
-myApp.controller('mainController', function ($scope) {
-	$scope.wineTypes = ['Rosso', 'Bianco', 'Rosé'];
+myApp.controller('updateController', function ($scope, $routeParams, $http) {
+	$scope.name = $routeParams.name;
+	$scope.year = Number($routeParams.year);
+	$scope.wineType = $routeParams.wineType;
+	$scope.self = $routeParams.self;
 
+
+	$scope.update = function(self){
+		console.log(self);
+		$http.put(self, { name: $scope.name, year: $scope.year, wineType: $scope.wineType }).then(
+			function (result) {
+				alert('Update sucessful');
+			}, function (data, status) {
+				console.log(data, status);
+			});
+	}
 });
 
-myApp.controller('crudController', function ($scope, $http, ) {
+myApp.controller('crudController', function ($scope, $http) {
 	$scope.name = '';
 	$scope.year = '';
 	$scope.wineType = 'RED';

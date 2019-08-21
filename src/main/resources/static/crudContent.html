@@ -12,7 +12,7 @@
 			<td>{{ wine.name }}</td>
 			<td>{{ wine.year }}</td>
 			<td>{{ wine.wineType }}</td>
-			<td><a href>edit</a></td>
+			<td><a href="#!/update?name={{wine.name}}&year={{wine.year}}&wineType={{wine.wineType}}&self={{wine._links.self.href}}"> edit</a></td>
 			<td><a href ng-click="deleteWine(wine._links.self.href, $index)">delete</a></td>
 		</tr>
 
