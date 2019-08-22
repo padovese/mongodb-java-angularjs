@@ -14,7 +14,7 @@ myApp.config(function ($routeProvider) {
 		})
 });
 
-myApp.controller('updateController', function ($scope, $routeParams, $http) {
+myApp.controller('updateController', function ($scope, $routeParams, $http, $window){
 	$scope.name = $routeParams.name;
 	$scope.year = Number($routeParams.year);
 	$scope.wineType = $routeParams.wineType;
@@ -26,6 +26,7 @@ myApp.controller('updateController', function ($scope, $routeParams, $http) {
 		$http.put(self, { name: $scope.name, year: $scope.year, wineType: $scope.wineType }).then(
 			function (result) {
 				alert('Update sucessful');
+				$window.location.href = '/';
 			}, function (data, status) {
 				console.log(data, status);
 			});

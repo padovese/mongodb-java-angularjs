@@ -1,21 +1,24 @@
-<div ng-controller="updateController">
-	<table>
-		<tr>
-			<td>Name:</td>
-			<td><input type="text" ng-model="name"></td>
-		</tr>
-		<tr>
-			<td>Year:</td>
-			<td><input type="number" string-to-number ng-model="year"></td>
-		</tr>
-		<tr>
-			<td>Type:</td>
-			<td><select class="form-control" ng-model="wineType">
-					<option value="RED">RED</option>
-					<option value="WHITE">WHITE</option>
-					<option value="ROSSE">ROSSE</option>
-				</select></td>
-		</tr>
-	</table>
-	<button class="form-control" ng-click="update(self)">update</button>
+<div class="row">
+	<div class="col-4"></div>
+	<div ng-controller="updateController" class="col-4">
+		<table class="table">
+			<tr>
+				<td>Name:</td>
+				<td><input type="text" ng-model="name" class="form-control"></td>
+			</tr>
+			<tr>
+				<td>Year:</td>
+				<td><input type="number" ng-model="year" class="form-control"></td>
+			</tr>
+			<tr>
+				<td>Type:</td>
+				<td><select class="form-control" ng-model="wineType">
+						<option value="RED">RED</option>
+						<option value="WHITE">WHITE</option>
+						<option value="ROSSE">ROSSE</option>
+					</select></td>
+			</tr>
+		</table>
+		<button class="form-control" ng-click="update(self)">update</button>
+	</div>
 </div>
