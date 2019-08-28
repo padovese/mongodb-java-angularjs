@@ -74,7 +74,7 @@ Easiest part of the tutorial, your database is setted.
 
 <h1>Java</h1>
 Access: https://start.spring.io/
-We will generate the project through this online feature, provide by spring, the initializr.
+<br>We will generate the project through this online feature, provide by spring: the initializr.
 
 project: Maven Project
 <br><b>Language:</b> Java
@@ -100,7 +100,7 @@ Now that the set up of our back-end application is done, let's get started.
 <b>Our app will be a CRUD that manage wines.</b>
 <br>In case you don't know, CRUD stands for a system that have the respective functionalities: Create, Read, Update and Delete.
 
-the first step is to create a class that represent our product, our entity, in this case, a wine:
+The first step is to create a class that represent our product, our entity, in this case, a wine:
 
 ```java
 package com.padovese.crud;
@@ -114,14 +114,50 @@ import lombok.Data;
 public class Wine {
 
     @Id
-    public String id;
-    public String name;
-    public short year;
-    public WineType wineType;
-    
+    private String id;
+    private String name;
+    private short year;
+    private WineType wineType;
+
 }
 ```
+You problaby are swearing me now because your class is not compiling. Let's make it all clear first.
 
+<b>1. </b>The annotation <b><i>@Data</b></i> is from lombok.
+<br>Lombok basically generates useful methods for us through the use of annotations. In this case specifically, the <b><i>@Data</b></i> generates a public constuctor with no field, a public construction with all fields, getters and setters, beside other things.
+<br>To work properly, you should have the lombok in your pom.xml(we already got it because of the initializr), and you need to set up your IDE in order to it understand the use of lombok and do not face it as an error.
+<br>It's very easy, please visit their site, choose install, find your IDE and follow the steps: https://projectlombok.org/
+
+<b>2. </b> The annotation <b><i>@Document</b></i> is from spring data.
+<br>Here you are telling to spring that this is a document that have to be stored in MongoDB as an document. Remember, in mongo tables does not exist, mongo has documents instead.
+
+<b>3. </b> The annotation <b><i>@Id</b></i> is from spring data as well. It says that this field will be an unique ID on database. At mongo, ids are no a sequencial number, they are like more a hash value, this is why it is a String.
+
+<b>4. </b> <b><i>WineType</b></i> is the reason why your class is not compiling. To solve this, we have to create the WineType, but it is not gonna be a class, it is gonna be an ENUM:
+```java
+package com.padovese.crud;
+
+public enum WineType {
+	RED, WHITE, ROSSE;
+}
+```
+First step done.
+___
+
+Now we shall create an interface that is actually a repository for our wine class:  
+```java
+package com.padovese.crud;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+public interface WineRepository extends MongoRepository<Wine, String>{
+}
+```
+<i><b>MongoRepository</b></i> is an implemention that already give us useful methods for our repository, like findOne, findAll, deleteOne, etc...
+<br>It uses generics, and in the diamond operator the first object is your class, and the second one is the type of your id.
+
+That's it. You have your back-end done.
+<br>Don't believe it? Open postman and make some calls:
 
 Dependencias: 
 - Rest Repository, Spring Data MongoDB //Essentials
