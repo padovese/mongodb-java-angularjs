@@ -73,6 +73,24 @@ You are now able to use some database, create some collections(here does not exi
 Easiest part of the tutorial, your database is setted.
 
 <h1>Java</h1>
+Access: https://start.spring.io/
+We will generate the project through this online feature, provide by spring, the initializr.
+
+project: Maven Project
+<br><b>Language:</b> Java
+<br><b>Spring Boot:</b> 2.1.7 (or higher)
+<br><b>Project Metadata:</b> feel free to type.
+<br><b>Dependencies:</b> 
+<br><b>1.</b> Spring Data MongoDB - This is the responsible to allow java to connect to mongodb, as well as map the data and give us a bunch of useful features.
+<br><b>2.</b> Rest Repository - This will expose our spring data repositories as REST services.
+<br><b>3.</b> Lombok - This generates automatically getters, setters and constructors.
+<br><b>4.</b> Spring Boot DevTools - Provide LiveReload and enhanced our life as a developer.
+<br><b>5.</b> Thymeleaf - We will use it just to map our static files correctly.
+
+Generate the project.
+<br>Extract it in your worspace folder.
+<br>In your IDE, import it as an existing maven project.
+
 Dependencias: 
 - Rest Repository, Spring Data MongoDB //Essentials
 - Optional Lombok, Spring Boot DevTools, thymeleaf
