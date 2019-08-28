@@ -91,6 +91,38 @@ Generate the project.
 <br>Extract it in your worspace folder.
 <br>In your IDE, import it as an existing maven project.
 
+You will see a brand new project in your IDE, with the packages setted up, the pom setted up, and an Application class to you start your spring boot application.
+<br>This is the beauty of initializr.
+___
+
+Now that the set up of our back-end application is done, let's get started.
+
+<b>Our app will be a CRUD that manage wines.</b>
+<br>In case you don't know, CRUD stands for a system that have the respective functionalities: Create, Read, Update and Delete.
+
+the first step is to create a class that represent our product, our entity, in this case, a wine:
+
+```java
+package com.padovese.crud;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.Data;
+
+@Data
+@Document
+public class Wine {
+
+    @Id
+    public String id;
+    public String name;
+    public short year;
+    public WineType wineType;
+    
+}
+```
+
+
 Dependencias: 
 - Rest Repository, Spring Data MongoDB //Essentials
 - Optional Lombok, Spring Boot DevTools, thymeleaf
