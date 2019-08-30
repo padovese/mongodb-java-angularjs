@@ -1,17 +1,17 @@
 package com.padovese.crud;
 
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import lombok.Data;
 
 @Data
 @Document
 public class Wine {
 
     @Id
-    public String id;
-    public String name;
-    public short year;
-    public WineType wineType;
-    
+    private String id;
+    private String name;
+    private short year;
+    private WineType wineType;
+
 }

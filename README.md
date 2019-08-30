@@ -253,6 +253,40 @@ Now to make some request for our wine system you have to call it this way:
 >http://localhost:8080/api/wines/
 
 <h1>Angular.js</h1>
+Our system is working, we just need to code a decent interface and it's done.
+Let's create two files:
+
+
+>src/main/resources/resources_phase_one/static/app.js
+```javascript
+let wineApp = angular.module('wineApp', []);
+
+wineApp.controller('crudController', function () {
+});
+```
+Here we are setting up our angular app, and defining our first <i>controller</i>.
+
+>src/main/resources/resources_phase_one/templates/home.html
+```html
+<!DOCTYPE html>
+<html lang="en" ng-app="wineApp">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+	<script src="app.js"></script>
+</head>
+
+<body>
+	<div ng-controller="crudController">
+	</div>
+</body>
+</html>
+```
+Here we are creating a basic HTML file, importing the angular.min.js, setting the <i>ng-app</i> attribute to our entire page and importing the angular <i>controller</i>.
 
 
 
