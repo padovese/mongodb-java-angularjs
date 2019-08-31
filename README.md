@@ -288,6 +288,8 @@ Here we are setting up our angular app, and defining our first <i>controller</i>
 ```
 Here we are creating a basic HTML file, importing the angular.min.js, setting the <i>ng-app</i> attribute to our entire page and importing the angular <i>controller</i>.
 
+Let's move on.
+
 
 
 Refs:
