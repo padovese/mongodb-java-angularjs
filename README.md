@@ -221,6 +221,7 @@ Return
 ```
 
 And this way, as you saw, we already have our CRUD done. At least the back-end.
+To practice and to prepare some data, I will ask you to register 5 different wines of your wish in your database.
 
 ___
 
@@ -257,7 +258,7 @@ Our system is working, we just need to code a decent interface and it's done.
 Let's create two files:
 
 
->src/main/resources/resources_phase_one/static/app.js
+>/crud/src/main/resources/static/app.js
 ```javascript
 let wineApp = angular.module('wineApp', []);
 
@@ -266,16 +267,14 @@ wineApp.controller('crudController', function () {
 ```
 Here we are setting up our angular app, and defining our first <i>controller</i>.
 
->src/main/resources/resources_phase_one/templates/home.html
+>/crud/src/main/resources/templates/home.html
 ```html
 <!DOCTYPE html>
 <html lang="en" ng-app="wineApp">
 
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Document</title>
+	<title>Wines</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
 	<script src="app.js"></script>
 </head>
@@ -288,7 +287,67 @@ Here we are setting up our angular app, and defining our first <i>controller</i>
 ```
 Here we are creating a basic HTML file, importing the angular.min.js, setting the <i>ng-app</i> attribute to our entire page and importing the angular <i>controller</i>.
 
-Let's move on.
+Now, in your IDE, run your Application.java as a java application and access http://localhost:8080/
+<br>You should see a white screen.
+
+___
+
+<h2>The Read Feature</h2>
+The HTTP verb equivalent to <b><i>read</i></b> is <b><i>get</i></b>. So let's inject the http service into our angular controller, so we can make request of any kind.
+
+>/crud/src/main/resources/static/app.js
+```javascript
+let wineApp = angular.module('wineApp', []);
+
+wineApp.controller('crudController', function ($scope, $http) {
+
+	$http.get('/api/wines').then(
+		function (result) {
+			$scope.wines = result.data._embedded.wines;
+		}, function (data, status) {
+			console.log(data, status);
+		});
+
+});
+```
+First of all, we injected http service and the scope though. Scope is basically an object that keep your values, and you can bind it to your HTML elements.<br>
+Http will help us to make requests, in this case a <b><i>get</i></b>. The first function is the success case, and the second one is the error case. So, if we have success making this call we will set the <b><i>$scope.wines</i></b> the value of our JSON <b><i>result.data._embedded.wines</i></b>. In case of error, we will do nothing but showing the data and the status in the console.
+
+>/crud/src/main/resources/templates/home.html
+```html
+<!DOCTYPE html>
+<html lang="en" ng-app="wineApp">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Wines</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+	<script src="app.js"></script>
+</head>
+
+<body>
+	<div ng-controller="crudController">
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Year</th>
+                <th>Wine Type</th>
+            </tr>
+
+            <tr ng-repeat="wine in wines">
+                <td>{{ wine.name }}</td>
+                <td>{{ wine.year }}</td>
+                <td>{{ wine.wineType }}</td>
+            </tr>
+        </table>
+	</div>
+</body>
+</html>
+```
+We created a table, and we are using here a tool for loop through our data, as we received a list of wines, the command: <b><i>ng-repeat</i></b>.<br> It will repeat this block of code once for each element in the wines list. Remember, we got this list as soon as we enter in the page, because we code the <b><i>$http.get</i></b> function in the body of our controller, and we are assign it results in the <b><i>$scope.wine</i></b> variable.
+
+Our output so far:<br>
+![alt text](img/1.jpg "Read Feature")
 
 
 
