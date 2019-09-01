@@ -435,7 +435,7 @@ First we are initializing the scope variables name, year and wineType to match o
 
 Create some new wines to test your application.
 <br>Our output so far:<br>
-![alt text](img/2.png "Read Feature")
+![alt text](img/2.png "Create Feature")
 ___
 
 <h2>The Delete Feature</h2>
@@ -533,7 +533,7 @@ That <b><i>deleteWine</i></b> function should be easy to you understand right no
 <br>In our success case, we will use the splice function in our wines list to remove that register. As you already know, angular will see that this element doesn't exist anymore and the HTML table will reflect it immediately.
 
 Our output so far:<br>
-![alt text](img/3.png "Read Feature")
+![alt text](img/3.png "Delete Feature")
 
 ___
 
@@ -621,7 +621,7 @@ First thing to do is associate the <i><b>$routeParams</b></i> to <i><b>$scope</b
 <br>Then, we will crate a function to update the data, similar to the old ones.
 
 It's time to refactor our HTML. Create two new files:
->/crud/src/main/resources/templates/home.html
+>/crud/src/main/resources/static/crudContent.html
 ```html
 <div ng-controller="crudController">
         <table>
@@ -661,6 +661,58 @@ It's time to refactor our HTML. Create two new files:
 Yes, this is a copy and paste from your index.html
 <br>We are only adding a new column and a link to update the wine.
 
+>/crud/src/main/resources/static/updateContent.html
+```html
+<div ng-controller="updateController">
+    <table>
+        <tr>
+            <td>Name:</td>
+            <td><input type="text" ng-model="name"></td>
+        </tr>
+        <tr>
+            <td>Year:</td>
+            <td><input type="number" ng-model="year"></td>
+        </tr>
+        <tr>
+            <td>Type:</td>
+            <td><select ng-model="wineType">
+                    <option value="RED">RED</option>
+                    <option value="WHITE">WHITE</option>
+                    <option value="ROSSE">ROSSE</option>
+                </select></td>
+        </tr>
+    </table>
+    <button ng-click="update(self)">update</button>
+```
+This form follows the same idea, we have the <i><b>ng-model</b></i> that binds our <i><b>$scope</b></i> variables, and we have a <i><b>ng-click</b></i> to invoke our function.
+
+>/crud/src/main/resources/templates/home.html
+```html
+<!DOCTYPE html>
+<html lang="en" ng-app="wineApp">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Wines</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular-route.js"></script>
+	<script src="app.js"></script>
+</head>
+
+<body>
+	<div ng-view></div>
+</body>
+</html>
+```
+First of all we should import here angular-route.js to use it.
+<br>Since we separeted the content, we can now use the <i><b>ng-view</b></i>. This div will have our content from now on, and it will be replaced when the content from other routes eventually.
+<br>This is all the logic our index.html should have.
+
+Our output so far:<br>
+![alt text](img/4.png "Update Feature")
+![alt text](img/5.png "Update Feature")
+
+___
 
 Refs:
 https://www.thepolyglotdeveloper.com/2019/01/getting-started-mongodb-docker-container-deployment/
