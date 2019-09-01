@@ -349,7 +349,93 @@ We created a table, and we are using here a tool for loop through our data, as w
 Our output so far:<br>
 ![alt text](img/1.jpg "Read Feature")
 
+___
 
+<h2>The Create Feature</h2>
+The HTTP verb equivalent to <b><i>create</i></b> is <b><i>post</i></b>. In this case, makes sense start from the HTML.
+
+>/crud/src/main/resources/templates/home.html
+```html
+<!DOCTYPE html>
+<html lang="en" ng-app="wineApp">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Wines</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+	<script src="app.js"></script>
+</head>
+
+<body>
+	<div ng-controller="crudController">
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Year</th>
+                <th>Wine Type</th>
+            </tr>
+
+            <tr ng-repeat="wine in wines">
+                <td>{{ wine.name }}</td>
+                <td>{{ wine.year }}</td>
+                <td>{{ wine.wineType }}</td>
+            </tr>
+
+            <tr>
+                <td><input type="text" ng-model="name"></td>
+                <td><input type="number" ng-model="year"></td>
+                <td>
+                    <select ng-model="wineType">
+                        <option value="RED">RED</option>
+                        <option value="WHITE">WHITE</option>
+                        <option value="ROSSE">ROSSE</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <button ng-click="setWine()">create</button>
+	</div>
+</body>
+</html>
+```
+We are adding another row in our table. We have now a text field, a number field, and a combo field. Pay attention to the <b><i>ng-model="myAttribute"</i></b> attribute, with it we can get or pass valor to angular through the <b><i>$scope.myAttribute</i></b>.
+<br>After the table, now we have a button with the <b><i>ng-click</i></b> attribute. With it we can call a function in our angular app, since this time we will make the <b><i>post</i></b> request only when the button is clicked and not when the screen loads.
+
+>/crud/src/main/resources/static/app.js
+```javascript
+let wineApp = angular.module('wineApp', []);
+
+wineApp.controller('crudController', function ($scope, $http) {
+    $scope.name = '';
+	$scope.year = '';
+	$scope.wineType = 'RED';
+
+	$http.get('/api/wines').then(
+		function (result) {
+			$scope.wines = result.data._embedded.wines;
+		}, function (data, status) {
+			console.log(data, status);
+		});
+
+    $scope.setWine = function () {
+		$http.post('/api/wines', { name: $scope.name, year: $scope.year, wineType: $scope.wineType }).then(
+			function (result) {
+				$scope.name = '';
+				$scope.year = '';
+				$scope.wines.push(result.data);
+			}, function (data, status) {
+				console.log(data, status);
+			});
+	}
+});
+```
+First we are initializing the scope variables name, year and wineType to match our HTML ng-model attributes.
+<br>Then we are creating the function setWine(). It take no parameters, it actually call the <b><i>$http.post</i></b> function using our <b><i>$scope</i></b> variable as parameters instead. Remember, in angular when a ng-model changes on the browser the  <b><i>$scope</i></b> see the diferente immediately. The vice-versa works as well.
+<br>In our success case, we clear the name and year variables and we push the new brand wine to our wines list. Take a look and see that angular refresh it contents on the screen as soon as the response kicks in, we do not need to refresh the page. These are some of the benefits of angular.
+
+Create some new wines to test your application.
+<br>Our output so far:<br>
+![alt text](img/2.png "Read Feature")
 
 Refs:
 https://www.thepolyglotdeveloper.com/2019/01/getting-started-mongodb-docker-container-deployment/
