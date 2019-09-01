@@ -436,6 +436,105 @@ First we are initializing the scope variables name, year and wineType to match o
 Create some new wines to test your application.
 <br>Our output so far:<br>
 ![alt text](img/2.png "Read Feature")
+___
+
+<h2>The Delete Feature</h2>
+We already have our structure coded, and the logic to implement the delete is very similar to the create feature. Let's start it editing our table adding a new column. 
+
+>/crud/src/main/resources/templates/home.html
+```html
+<!DOCTYPE html>
+<html lang="en" ng-app="wineApp">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Wines</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+	<script src="app.js"></script>
+</head>
+
+<body>
+	<div ng-controller="crudController">
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Year</th>
+                <th>Wine Type</th>
+                <th></th>
+            </tr>
+
+            <tr ng-repeat="wine in wines">
+                <td>{{ wine.name }}</td>
+                <td>{{ wine.year }}</td>
+                <td>{{ wine.wineType }}</td>
+                <td><a href ng-click="deleteWine(wine._links.self.href, $index)">delete</a></td>
+            </tr>
+
+            <tr>
+                <td><input type="text" ng-model="name"></td>
+                <td><input type="number" ng-model="year"></td>
+                <td>
+                    <select ng-model="wineType">
+                        <option value="RED">RED</option>
+                        <option value="WHITE">WHITE</option>
+                        <option value="ROSSE">ROSSE</option>
+                    </select>
+                </td>
+                <td></td>
+            </tr>
+        </table>
+        <button ng-click="setWine()">create</button>
+	</div>
+</body>
+</html>
+```
+The secret is the <b><i>ng-click</i></b> and the function again. This time we must pass 2 parameters:
+<br>- The self link to the wine, provided by the back-end in our first "Read Feature".
+<br>- The index. Index is the self position from a loop condition. In this case it will basically tell us which row we are clicking, and it will be necessary to delete this register after all.
+
+>/crud/src/main/resources/static/app.js
+```javascript
+let wineApp = angular.module('wineApp', []);
+
+wineApp.controller('crudController', function ($scope, $http) {
+    $scope.name = '';
+	$scope.year = '';
+	$scope.wineType = 'RED';
+
+	$http.get('/api/wines').then(
+		function (result) {
+			$scope.wines = result.data._embedded.wines;
+		}, function (data, status) {
+			console.log(data, status);
+		});
+
+    $scope.setWine = function () {
+		$http.post('/api/wines', { name: $scope.name, year: $scope.year, wineType: $scope.wineType }).then(
+			function (result) {
+				$scope.name = '';
+				$scope.year = '';
+				$scope.wines.push(result.data);
+			}, function (data, status) {
+				console.log(data, status);
+			});
+	}
+
+    $scope.deleteWine = function (endPoint, i) {
+		$http.delete(endPoint).then(
+			function (result) {
+				$scope.wines.splice(i, 1);
+			}, function (data, result) {
+				console.log(data, status);
+			});
+	}
+});
+```
+That <b><i>deleteWine</i></b> function should be easy to you understand right now. It calls the <b><i>$http.delete</i></b> function and pass the wine's end-point as a parameter, and it's done.
+<br>In our success case, we will use the splice function in our wines list to remove that register. As you already know, angular will see that this element doesn't exist anymore and the HTML table will reflect it immediately.
+
+Our output so far:<br>
+![alt text](img/3.png "Read Feature")
+
 
 Refs:
 https://www.thepolyglotdeveloper.com/2019/01/getting-started-mongodb-docker-container-deployment/
