@@ -535,6 +535,132 @@ That <b><i>deleteWine</i></b> function should be easy to you understand right no
 Our output so far:<br>
 ![alt text](img/3.png "Read Feature")
 
+___
+
+<h2>The Update Feature</h2>
+The HTTP verb equivalent to <b><i>update</i></b> is <b><i>put</i></b>. In this case, makes sense start from the HTML.
+<br>We are going to make a structural change right now, because to update some register we will have to enter in a new page to edit it. Let's implement the SPA(Single Page Application) concept and angular will handle it for us.
+
+To handle it, we must use the ngRouter API from angular into our app. Then we will config the routes and after that we will create our update functionality.
+<br>You will see a lot of new code, don't worry it will be explained.
+
+>/crud/src/main/resources/static/app.js
+```javascript
+let wineApp = angular.module('wineApp', ['ngRoute']);
+
+wineApp.config(function ($routeProvider) {
+	$routeProvider
+		.when("/", {
+			templateUrl: 'crudContent.html',
+			controller: 'crudController'
+		})
+
+		.when("/update", {
+			templateUrl: 'updateContent.html',
+			controller: 'crudController'
+		})
+});
+
+wineApp.controller('updateController', function ($scope, $routeParams, $http, $window){
+	$scope.name = $routeParams.name;
+	$scope.year = Number($routeParams.year);
+	$scope.wineType = $routeParams.wineType;
+	$scope.self = $routeParams.self;
+
+	$scope.update = function(self){
+		$http.put(self, { name: $scope.name, year: $scope.year, wineType: $scope.wineType }).then(
+			function (result) {
+				alert('Update sucessful');
+				$window.location.href = '/';
+			}, function (data, status) {
+				console.log(data, status);
+			});
+	}
+});
+
+wineApp.controller('crudController', function ($scope, $http) {
+    $scope.name = '';
+	$scope.year = '';
+	$scope.wineType = 'RED';
+
+	$http.get('/api/wines').then(
+		function (result) {
+			$scope.wines = result.data._embedded.wines;
+		}, function (data, status) {
+			console.log(data, status);
+		});
+
+    $scope.setWine = function () {
+		$http.post('/api/wines', { name: $scope.name, year: $scope.year, wineType: $scope.wineType }).then(
+			function (result) {
+				$scope.name = '';
+				$scope.year = '';
+				$scope.wines.push(result.data);
+			}, function (data, status) {
+				console.log(data, status);
+			});
+	}
+
+    $scope.deleteWine = function (endPoint, i) {
+		$http.delete(endPoint).then(
+			function (result) {
+				$scope.wines.splice(i, 1);
+			}, function (data, result) {
+				console.log(data, status);
+			});
+	}
+});
+```
+<b>1. </b>We tell angular that we want to use ngRoute API declaring it in our first line of code: <i><b>['ngRoute']</b></i>.<br>
+<b>2. </b>Our <i><b>wineApp.config</b></i> is the key to the SPA. Here we let <i><b>$routeProvider</b></i> handle it for us. We need to refactor our HTML to keep this straight, but it's very easy to get. When we call some end-point, like "/update", angular will replace the content of the page with the HTML template specified, and call a controller to take care of its logic.<br>
+<b>3. </b>The creation of our updateController. Here we inject two new services: 
+- <i><b>$routeParams</b></i>, the responsible for let us get the parameters from a requisition. We will need to inform this controller who will be updated, so this is necessary.
+- <i><b>$window</b></i>, the responsible for redirect the user to the first page after we update the wine.
+
+First thing to do is associate the <i><b>$routeParams</b></i> to <i><b>$scope</b></i> variables.
+<br>Then, we will crate a function to update the data, similar to the old ones.
+
+It's time to refactor our HTML. Create two new files:
+>/crud/src/main/resources/templates/home.html
+```html
+<div ng-controller="crudController">
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Year</th>
+                <th>Wine Type</th>
+                <th></th>
+                <th></th>
+            </tr>
+
+            <tr ng-repeat="wine in wines">
+                <td>{{ wine.name }}</td>
+                <td>{{ wine.year }}</td>
+                <td>{{ wine.wineType }}</td>
+                <td><a href="#!/update?name={{wine.name}}&year={{wine.year}}&wineType={{wine.wineType}}&self={{wine._links.self.href}}"> edit</a></td>
+                <td><a href ng-click="deleteWine(wine._links.self.href, $index)">delete</a></td>
+            </tr>
+
+            <tr>
+                <td><input type="text" ng-model="name"></td>
+                <td><input type="number" ng-model="year"></td>
+                <td>
+                    <select ng-model="wineType">
+                        <option value="RED">RED</option>
+                        <option value="WHITE">WHITE</option>
+                        <option value="ROSSE">ROSSE</option>
+                    </select>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+        <button ng-click="setWine()">create</button>
+	</div>
+```
+Yes, this is a copy and paste from your index.html
+<br>We are only adding a new column and a link to update the wine.
+
 
 Refs:
 https://www.thepolyglotdeveloper.com/2019/01/getting-started-mongodb-docker-container-deployment/
