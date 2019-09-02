@@ -683,6 +683,7 @@ Yes, this is a copy and paste from your index.html
         </tr>
     </table>
     <button ng-click="update(self)">update</button>
+</div>
 ```
 This form follows the same idea, we have the <i><b>ng-model</b></i> that binds our <i><b>$scope</b></i> variables, and we have a <i><b>ng-click</b></i> to invoke our function.
 
@@ -714,9 +715,101 @@ Our output so far:<br>
 
 ___
 
-Refs:
-https://www.thepolyglotdeveloper.com/2019/01/getting-started-mongodb-docker-container-deployment/
+Our system is working as we wish, but before we finish, let's add some bootstrap style to it and make the visual way better.
 
-https://spring.io/guides/gs/accessing-data-mongodb/
+>/crud/src/main/resources/templates/home.html
+```html
+<!DOCTYPE html>
+<html lang="en" ng-app="wineApp">
 
-https://spring.io/guides/tutorials/react-and-spring-data-rest/
+<head>
+	<meta charset="UTF-8">
+	<title>Wines</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+	<div class="container">
+		<div ng-view></div>
+	</div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular-route.js"></script>
+	<script src="app.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+
+</html>
+```
+Here in the index.html we are importing bootstrap's css and js. Also, let's put our <i><b>ng-view</b></i> inside a div with the container class.
+
+>/crud/src/main/resources/static/crudContent.html
+```html
+<div class="col-sm" ng-controller="crudController">
+    <table class="table table-sm">
+        <tr>
+            <th>Name</th>
+            <th>Year</th>
+            <th>Wine Type</th>
+            <th></th>
+            <th></th>
+        </tr>
+
+        <tr ng-repeat="wine in wines">
+            <td>{{ wine.name }}</td>
+            <td>{{ wine.year }}</td>
+            <td>{{ wine.wineType }}</td>
+            <td><a href="#!/update?name={{wine.name}}&year={{wine.year}}&wineType={{wine.wineType}}&self={{wine._links.self.href}}"> edit</a></td>
+            <td><a href ng-click="deleteWine(wine._links.self.href, $index)">delete</a></td>
+        </tr>
+
+        <tr>
+            <td><input type="text" class="form-control" ng-model="name"></td>
+            <td><input type="number" class="form-control" ng-model="year"></td>
+            <td>
+                <select class="form-control" ng-model="wineType">
+                    <option value="RED">RED</option>
+                    <option value="WHITE">WHITE</option>
+                    <option value="ROSSE">ROSSE</option>
+                </select>
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+    <button class="form-control" ng-click="setWine()">create</button>
+</div>
+```
+Since the templates will be rendered inside our index.html, you can use the bootstrap classes over here as well.
+
+>/crud/src/main/resources/static/updateContent.html
+```html
+<div class="row">
+    <div class="col-4"></div>
+    <div class="col-4" ng-controller="updateController">
+        <table class="table">
+            <tr>
+                <td>Name:</td>
+                <td><input type="text" class="form-control" ng-model="name"></td>
+            </tr>
+            <tr>
+                <td>Year:</td>
+                <td><input type="number" class="form-control" ng-model="year"></td>
+            </tr>
+            <tr>
+                <td>Type:</td>
+                <td><select class="form-control" ng-model="wineType">
+                        <option value="RED">RED</option>
+                        <option value="WHITE">WHITE</option>
+                        <option value="ROSSE">ROSSE</option>
+                    </select></td>
+            </tr>
+        </table>
+        <button class="form-control" ng-click="update(self)">update</button>
+    </div>
+</div>
+```
+
+Our final product:<br>
+![alt text](img/6.png "Update Feature")
+![alt text](img/7.png "Update Feature")
