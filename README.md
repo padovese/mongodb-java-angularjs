@@ -179,8 +179,21 @@ Body:
 ```
 
 Send it. If everything is fine, the response should be something like this:
+> Status: 201 Created
 ```json
-Return
+{
+  "name": "Merlot",
+  "year": 2012,
+  "wineType": "RED",
+  "_links": {
+    "self": {
+      "href": "http://localhost:8080/wines/5d6c6ec9a802da44f1c4998b"
+    },
+    "wine": {
+      "href": "http://localhost:8080/wines/5d6c6ec9a802da44f1c4998b"
+    }
+  }
+}
 ```
 
 Now let's query the results of our repository. To list every wine we have, we shall use the HTTP verb <b><i>get</b></i>:
@@ -188,12 +201,46 @@ Verb and end-point
 >GET http://localhost:8080/wines/
 
 Send it. The response should be something like this:
+> Status: 200 OK
 ```json
-Return
+{
+  "_embedded": {
+    "wines": [
+      {
+        "name": "Merlot",
+        "year": 2012,
+        "wineType": "RED",
+        "_links": {
+          "self": {
+            "href": "http://localhost:8080/wines/5d6c6ec9a802da44f1c4998b"
+          },
+          "wine": {
+            "href": "http://localhost:8080/wines/5d6c6ec9a802da44f1c4998b"
+          }
+        }
+      }
+    ]
+  },
+  "_links": {
+    "self": {
+      "href": "http://localhost:8080/wines{?page,size,sort}",
+      "templated": true
+    },
+    "profile": {
+      "href": "http://localhost:8080/profile/wines"
+    }
+  },
+  "page": {
+    "size": 20,
+    "totalElements": 1,
+    "totalPages": 1,
+    "number": 0
+  }
+}
 ```
 
-To update the data of some wine we shall use the HTTP verb<b><i>put</b></i>:
->PUT http://localhost:8080/wines/f87df865f68d5fd8f5
+To update the data of some wine we shall use the HTTP verb <b><i>put</b></i>:
+>PUT http://localhost:8080/wines/5d6c6ec9a802da44f1c4998b
 
 Header:
 ```
@@ -208,16 +255,30 @@ Body:
 }
 ```
 Send it. The response should be something like this:
+> Status: 200 OK
 ```json
-Return
+{
+  "name": "Merlot",
+  "year": 2012,
+  "wineType": "WHITE",
+  "_links": {
+    "self": {
+      "href": "http://localhost:8080/api/wines/5d6c6ec9a802da44f1c4998b"
+    },
+    "wine": {
+      "href": "http://localhost:8080/api/wines/5d6c6ec9a802da44f1c4998b"
+    }
+  }
+}
 ```
 
 To delete some wine we will use the HTTP verb<b><i>delete</b></i>:
 >DELETE http://localhost:8080/wines/f87df865f68d5fd8f5
 
 Send it. The response should be something like this:
+> Status: 204 No Content
 ```json
-Return
+(no body)
 ```
 
 And this way, as you saw, we already have our CRUD done. At least the back-end.
