@@ -1,6 +1,8 @@
 # mongodb-java-angularjs
-![alt text](img/mongodb-java-angular.png "The Stack")
-<br>A project using:
+<p align="center">
+ <img src="img/mongodb-java-angular.png">
+</p>
+A project using:
 <br>1. MongoDB as your database, inside a docker container. 
 <br>2. Java as your back-end language, with spring data. 
 <br>3. Angular.js as your front-end framework.
