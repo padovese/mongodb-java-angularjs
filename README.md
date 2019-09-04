@@ -4,7 +4,7 @@
 </p>
 A project using:
 <br>1. MongoDB as your database, inside a docker container. 
-<br>2. Java as your back-end language, with spring data. 
+<br>2. Java as your back-end language, with spring boot and spring data.
 <br>3. Angular.js as your front-end framework.
 <br>This project will be separeted in 3 parts, respectively.
 
@@ -13,7 +13,7 @@ I am expecting you to have:
 <li>Access to a terminal.</li>
 <li>Docker installed.</li>
 <li>Postman installed.</li>
-<li>Some IDE from your choice.</li>
+<li>Some IDE from your choice. (I'm using Eclipse & Visual Code)</li>
 </ul>
 
 <h1>MongoDB</h1>
