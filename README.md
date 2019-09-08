@@ -79,7 +79,7 @@ Easiest part of the tutorial, your database is setted.
 Access: https://start.spring.io/
 <br>We will generate the project through this online feature, provide by spring: the initializr.
 
-project: Maven Project
+<b>project:</b> Maven Project
 <br><b>Language:</b> Java
 <br><b>Spring Boot:</b> 2.1.7 (or higher)
 <br><b>Project Metadata:</b> feel free to type.
@@ -91,7 +91,7 @@ project: Maven Project
 <br><b>5.</b> Thymeleaf - We will use it just to map our static files correctly.
 
 Generate the project.
-<br>Extract it in your worspace folder.
+<br>Extract it in your workspace folder.
 <br>In your IDE, import it as an existing maven project.
 
 You will see a brand new project in your IDE, with the packages setted up, the pom setted up, and an Application class to you start your spring boot application.
@@ -134,7 +134,7 @@ You problaby are swearing me now because your class is not compiling. Let's make
 <b>2. </b> The annotation <b><i>@Document</b></i> is from spring data.
 <br>Here you are telling to spring that this is a document that have to be stored in MongoDB as an document. Remember, in mongo tables does not exist, mongo has documents instead.
 
-<b>3. </b> The annotation <b><i>@Id</b></i> is from spring data as well. It says that this field will be an unique ID on database. At mongo, ids are no a sequencial number, they are like more a hash value, this is why it is a String.
+<b>3. </b> The annotation <b><i>@Id</b></i> is from spring data as well. It says that this field will be an unique ID on database. At mongo, ids are not a sequencial number, they are like more a hash value, this is why it is a String.
 
 <b>4. </b> <b><i>WineType</b></i> is the reason why your class is not compiling. To solve this, we have to create the WineType, but it is not gonna be a class, it is gonna be an ENUM:
 ```java
@@ -200,6 +200,7 @@ Send it. If everything is fine, the response should be something like this:
 ```
 
 Now let's query the results of our repository. To list every wine we have, we shall use the HTTP verb <b><i>get</b></i>:
+
 Verb and end-point
 >GET http://localhost:8080/wines/
 
@@ -275,7 +276,7 @@ Send it. The response should be something like this:
 }
 ```
 
-To delete some wine we will use the HTTP verb<b><i>delete</b></i>:
+To delete some wine we will use the HTTP verb <b><i>delete</b></i>:
 >DELETE http://localhost:8080/wines/f87df865f68d5fd8f5
 
 Send it. The response should be something like this:
