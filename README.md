@@ -340,13 +340,13 @@ Here we are setting up our angular app, and defining our first <i>controller</i>
 <head>
 	<meta charset="UTF-8">
 	<title>Wines</title>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
-	<script src="app.js"></script>
 </head>
 
 <body>
 	<div ng-controller="crudController">
 	</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+	<script src="app.js"></script>
 </body>
 </html>
 ```
@@ -386,8 +386,6 @@ Http will help us to make requests, in this case a <b><i>get</i></b>. The first 
 <head>
 	<meta charset="UTF-8">
 	<title>Wines</title>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
-	<script src="app.js"></script>
 </head>
 
 <body>
@@ -406,6 +404,8 @@ Http will help us to make requests, in this case a <b><i>get</i></b>. The first 
             </tr>
         </table>
 	</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+	<script src="app.js"></script>
 </body>
 </html>
 ```
@@ -427,8 +427,6 @@ The HTTP verb equivalent to <b><i>create</i></b> is <b><i>post</i></b>. In this 
 <head>
 	<meta charset="UTF-8">
 	<title>Wines</title>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
-	<script src="app.js"></script>
 </head>
 
 <body>
@@ -460,6 +458,8 @@ The HTTP verb equivalent to <b><i>create</i></b> is <b><i>post</i></b>. In this 
         </table>
         <button ng-click="setWine()">create</button>
 	</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+	<script src="app.js"></script>
 </body>
 </html>
 ```
@@ -514,8 +514,6 @@ We already have our structure coded, and the logic to implement the delete is ve
 <head>
 	<meta charset="UTF-8">
 	<title>Wines</title>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
-	<script src="app.js"></script>
 </head>
 
 <body>
@@ -550,6 +548,8 @@ We already have our structure coded, and the logic to implement the delete is ve
         </table>
         <button ng-click="setWine()">create</button>
 	</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+	<script src="app.js"></script>
 </body>
 </html>
 ```
@@ -603,7 +603,7 @@ Our output so far:<br>
 ___
 
 <h2>The Update Feature</h2>
-The HTTP verb equivalent to <b><i>update</i></b> is <b><i>put</i></b>. In this case, makes sense start from the HTML.
+The HTTP verb equivalent to <b><i>update</i></b> is <b><i>put</i></b>.
 <br>We are going to make a structural change right now, because to update some register we will have to enter in a new page to edit it. Let's implement the SPA(Single Page Application) concept and angular will handle it for us.
 
 To handle it, we must use the ngRouter API from angular into our app. Then we will config the routes and after that we will create our update functionality.
@@ -622,7 +622,7 @@ wineApp.config(function ($routeProvider) {
 
 		.when("/update", {
 			templateUrl: 'updateContent.html',
-			controller: 'crudController'
+			controller: 'updateController'
 		})
 });
 
@@ -689,39 +689,39 @@ It's time to refactor our HTML. Create two new files:
 >/crud/src/main/resources/static/crudContent.html
 ```html
 <div ng-controller="crudController">
-        <table>
-            <tr>
-                <th>Name</th>
-                <th>Year</th>
-                <th>Wine Type</th>
-                <th></th>
-                <th></th>
-            </tr>
+	<table>
+		<tr>
+			<th>Name</th>
+			<th>Year</th>
+			<th>Wine Type</th>
+			<th></th>
+			<th></th>
+		</tr>
 
-            <tr ng-repeat="wine in wines">
-                <td>{{ wine.name }}</td>
-                <td>{{ wine.year }}</td>
-                <td>{{ wine.wineType }}</td>
-                <td><a href="#!/update?name={{wine.name}}&year={{wine.year}}&wineType={{wine.wineType}}&self={{wine._links.self.href}}"> edit</a></td>
-                <td><a href ng-click="deleteWine(wine._links.self.href, $index)">delete</a></td>
-            </tr>
+		<tr ng-repeat="wine in wines">
+			<td>{{ wine.name }}</td>
+			<td>{{ wine.year }}</td>
+			<td>{{ wine.wineType }}</td>
+			<td><a href="#!/update?name={{wine.name}}&year={{wine.year}}&wineType={{wine.wineType}}&self={{wine._links.self.href}}"> edit</a></td>
+			<td><a href ng-click="deleteWine(wine._links.self.href, $index)">delete</a></td>
+		</tr>
 
-            <tr>
-                <td><input type="text" ng-model="name"></td>
-                <td><input type="number" ng-model="year"></td>
-                <td>
-                    <select ng-model="wineType">
-                        <option value="RED">RED</option>
-                        <option value="WHITE">WHITE</option>
-                        <option value="ROSSE">ROSSE</option>
-                    </select>
-                </td>
-                <td></td>
-                <td></td>
-            </tr>
-        </table>
-        <button ng-click="setWine()">create</button>
-	</div>
+		<tr>
+			<td><input type="text" ng-model="name"></td>
+			<td><input type="number" ng-model="year"></td>
+			<td>
+				<select ng-model="wineType">
+					<option value="RED">RED</option>
+					<option value="WHITE">WHITE</option>
+					<option value="ROSSE">ROSSE</option>
+				</select>
+			</td>
+			<td></td>
+			<td></td>
+		</tr>
+	</table>
+	<button ng-click="setWine()">create</button>
+</div>
 ```
 Yes, this is a copy and paste from your index.html
 <br>We are only adding a new column and a link to update the wine.
@@ -760,18 +760,18 @@ This form follows the same idea, we have the <i><b>ng-model</b></i> that binds o
 <head>
 	<meta charset="UTF-8">
 	<title>Wines</title>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular-route.js"></script>
-	<script src="app.js"></script>
 </head>
 
 <body>
 	<div ng-view></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular-route.js"></script>
+	<script src="app.js"></script>
 </body>
 </html>
 ```
 First of all we should import here angular-route.js to use it.
-<br>Since we separeted the content, we can now use the <i><b>ng-view</b></i>. This div will have our content from now on, and it will be replaced when the content from other routes eventually.
+<br>Since we separeted the content, we can now use the <i><b>ng-view</b></i>. This div will have our content from now on, and it will be replaced when the content from other routes are called eventually.
 <br>This is all the logic our index.html should have.
 
 Our output so far:<br>
